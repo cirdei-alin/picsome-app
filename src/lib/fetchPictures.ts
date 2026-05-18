@@ -13,7 +13,7 @@ function generatePrice(id: number) {
 
 export async function fetchPictures() {
   const response = await fetch(
-    "https://picsum.photos/v2/list?page=1&limit=20"
+    "https://picsum.photos/v2/list?page=1&limit=100"
   );
 
   const data: ApiImage[] = await response.json();
