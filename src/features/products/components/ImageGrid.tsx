@@ -14,11 +14,12 @@ type Image = {
 
 export default function ImageGrid() {
   const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   const addToFavorites = useImageStore((state) => state.addToFavorites);
   const addToStore = useImageStore((state) => state.addToStore);
-  const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
   async function loadImages() {
     const pictures = await fetchPictures();
@@ -61,7 +62,8 @@ export default function ImageGrid() {
             <img
               src={image.url}
               alt={image.title}
-              className="w-full h-60 object-cover"
+              className="w-full h-60 object-cover cursor-pointer"
+              onClick={() => setSelectedImage(image)}
             />
 
             <div className="p-4">
@@ -88,6 +90,70 @@ export default function ImageGrid() {
           </div>
         ))}
       </div>
+
+     {selectedImage && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 999999,
+            backgroundColor: "rgba(0, 0, 0, 0.85)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px",
+          }}
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              borderRadius: "12px",
+              maxWidth: "900px",
+              width: "100%",
+              overflow: "hidden",
+            }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <img
+              src={selectedImage.url}
+              alt={selectedImage.title}
+              style={{
+                width: "100%",
+                maxHeight: "70vh",
+                objectFit: "cover",
+              }}
+            />
+
+            <div style={{ padding: "16px" }}>
+              <h2 style={{ fontSize: "24px", fontWeight: "bold" }}>
+                {selectedImage.title}
+              </h2>
+
+              <p style={{ color: "#4b5563", marginTop: "8px" }}>
+                {selectedImage.description}
+              </p>
+
+              <p style={{ fontWeight: "bold", marginTop: "8px" }}>
+                ${selectedImage.price.toFixed(2)}
+              </p>
+
+              <button
+                style={{
+                  border: "1px solid black",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  marginTop: "16px",
+                }}
+                onClick={() => setSelectedImage(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
