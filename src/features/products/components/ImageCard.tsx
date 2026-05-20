@@ -1,10 +1,4 @@
-type Image = {
-  id: number;
-  title: string;
-  description: string;
-  url: string;
-  price: number;
-};
+import type { Image } from "@/src/types/image";
 
 type ImageCardProps = {
   image: Image;

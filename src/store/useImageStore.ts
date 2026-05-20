@@ -1,13 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-type Image = {
-  id: number;
-  title: string;
-  description: string;
-  url: string;
-  price: number;
-};
+import type { Image } from "@/src/types/image";
 
 type ImageStore = {
   favorites: Image[];
