@@ -7,7 +7,6 @@ type Image = {
   description: string;
   url: string;
   price: number;
-  tags: string[];
 };
 
 type ImageStore = {

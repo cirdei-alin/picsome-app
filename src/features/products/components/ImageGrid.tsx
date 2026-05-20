@@ -6,7 +6,7 @@ import { fetchPictures } from "@/src/lib/fetchPictures";
 import { ImageCard } from "./ImageCard";
 import { ImageGridSkeleton } from "./ImageGridSkeleton";
 import { ImagePreviewModal } from "./ImagePreviewModal";
-import { SearchBar } from "./SearchBar";
+import SearchBar from "./SearchBar";
 
 type Image = {
   id: number;
@@ -14,39 +14,29 @@ type Image = {
   description: string;
   url: string;
   price: number;
-  tags: string[];
 };
 
 export default function ImageGrid() {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("nature");
 
   const addToFavorites = useImageStore((state) => state.addToFavorites);
   const addToStore = useImageStore((state) => state.addToStore);
 
   useEffect(() => {
     async function loadImages() {
-      const pictures = await fetchPictures();
+      const pictures = await fetchPictures(searchTerm);
 
       setImages(pictures);
       setLoading(false);
     }
 
     loadImages();
-  }, []);
+  }, [searchTerm]);
 
-  const filteredImages = images.filter((image) => {
-    const search = searchTerm.toLowerCase();
-
-    return (
-      image.title.toLowerCase().includes(search) ||
-      image.description.toLowerCase().includes(search) ||
-      image.tags.some((tag) => tag.toLowerCase().includes(search))
-    );
-  });
-
+  
   if (loading) {
     return <ImageGridSkeleton />;
   }
@@ -55,10 +45,13 @@ export default function ImageGrid() {
     <section className="p-6">
       <h1 className="text-3xl font-bold mb-6">PicSome Gallery</h1>
 
-      <SearchBar value={searchTerm} onChange={setSearchTerm} />
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredImages.map((image) => (
+        {images.map((image) => (
           <ImageCard
             key={image.id}
             image={image}

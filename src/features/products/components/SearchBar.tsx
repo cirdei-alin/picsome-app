@@ -1,16 +1,19 @@
 type SearchBarProps = {
-  value: string;
-  onChange: (value: string) => void;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
 };
 
-export function SearchBar({ value, onChange }: SearchBarProps) {
+export default function SearchBar({
+  searchTerm,
+  setSearchTerm,
+}: SearchBarProps) {
   return (
     <input
       type="text"
-      value={value}
       placeholder="Search images..."
-      onChange={(event) => onChange(event.target.value)}
-      className="mb-6 w-full rounded border px-4 py-2"
+      value={searchTerm}
+      onChange={(event) => setSearchTerm(event.target.value)}
+      className="w-full border rounded-lg px-4 py-3 mb-6 bg-black text-white"
     />
   );
 }

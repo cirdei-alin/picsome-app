@@ -1,52 +1,38 @@
-type ApiImage = {
+type UnsplashImage = {
   id: string;
-  author: string;
-  download_url: string;
+  alt_description: string;
+  urls: {
+    regular: string;
+  };
+  user: {
+    name: string;
+  };
 };
 
-function generatePrice(id: number) {
-  const seed = Math.sin(id) * 10000;
+function generatePrice(id: string) {
+  const seed = id.length * 9999;
   const random = seed - Math.floor(seed);
 
   return Number((random * 20 + 5).toFixed(2));
 }
 
-export async function fetchPictures() {
+export async function fetchPictures(searchQuery = "nature") {
   const response = await fetch(
-    "https://picsum.photos/v2/list?page=1&limit=200"
+    `https://api.unsplash.com/search/photos?query=${searchQuery}&per_page=30`,
+    {
+      headers: {
+        Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`,
+      },
+    }
   );
 
-  const data: ApiImage[] = await response.json();
+  const data = await response.json();
 
-  const imageTags = [
-    ["laptop", "coffee", "workspace", "desk", "technology"],
-    ["person", "work", "laptop", "office", "business"],
-    ["coffee", "notebook", "workspace", "study", "desk"],
-    ["phone", "technology", "workspace", "office", "modern"],
-    ["meeting", "coffee", "tablet", "business", "teamwork"],
-    ["laptop", "desk", "technology", "work", "office"],
-    ["nature", "mountains", "forest", "lake", "landscape"],
-    ["beach", "ocean", "summer", "travel", "vacation"],
-    ["city", "buildings", "urban", "night", "lights"],
-    ["car", "road", "travel", "speed", "transport"],
-    ["food", "coffee", "restaurant", "drink", "breakfast"],
-    ["fitness", "gym", "sport", "health", "training"],
-    ["coding", "developer", "programming", "computer", "tech"],
-    ["fashion", "clothes", "style", "shopping", "model"],
-    ["music", "guitar", "concert", "artist", "sound"],
-    ["animals", "dog", "cat", "nature", "pet"],
-    ["gaming", "computer", "setup", "rgb", "technology"],
-    ["books", "study", "library", "education", "learning"],
-    ["space", "stars", "galaxy", "universe", "science"],
-    ["rain", "weather", "storm", "nature", "sky"],
-  ];  
-
-  return data.map((image, index) => ({
-    id: Number(image.id),
-    title: `Photo by ${image.author}`,
-    description: "Random image from Picsum API",
-    url: image.download_url,
-    price: generatePrice(Number(image.id)),
-    tags: imageTags[index] || ["photo"],
+  return data.results.map((image: UnsplashImage) => ({
+    id: image.id,
+    title: image.alt_description || "Unsplash Image",
+    description: `Photo by ${image.user.name}`,
+    url: image.urls.regular,
+    price: generatePrice(image.id),
   }));
 }
