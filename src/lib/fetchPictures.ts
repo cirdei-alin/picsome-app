@@ -10,10 +10,15 @@ type UnsplashImage = {
 };
 
 function generatePrice(id: string) {
-  const seed = id.length * 9999;
-  const random = seed - Math.floor(seed);
+  let hash = 0;
 
-  return Number((random * 20 + 5).toFixed(2));
+  for (let i = 0; i < id.length; i++) {
+    hash += id.charCodeAt(i) * (i + 1);
+  }
+
+  const price = (hash % 2000) / 100 + 5;
+
+  return Number(price.toFixed(2));
 }
 
 export async function fetchPictures(searchQuery = "nature") {
