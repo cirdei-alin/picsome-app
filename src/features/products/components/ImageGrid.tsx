@@ -17,6 +17,7 @@ export default function ImageGrid({
 }: ImageGridProps) {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);  
   const [error, setError] = useState("");
 
@@ -24,24 +25,28 @@ export default function ImageGrid({
   const addToStore = useImageStore((state) => state.addToStore);
 
   useEffect(() => {
-      async function loadImages() {
-        try {
-          setLoading(true)
-          setError("");
+    async function loadImages() {
+      try {
+        setError("");
 
-          const pictures = await fetchPictures(searchTerm);
-
-          setImages(pictures);
-        } catch {
-          setError("Something went wrong while loading images.");
-        } finally {
-          setLoading(false);
+        if (images.length === 0) {
+          setLoading(true);
+        } else {
+          setIsSearching(true);
         }
+
+        const pictures = await fetchPictures(searchTerm);
+        setImages(pictures);
+      } catch {
+        setError("Something went wrong while loading images.");
+      } finally {
+        setLoading(false);
+        setIsSearching(false);
+      }
     }
 
     loadImages();
   }, [searchTerm]);
-
   
   if (loading) {
     return <ImageGridSkeleton />;
@@ -50,6 +55,12 @@ export default function ImageGrid({
   return (
     <section className="p-6">
       <h1 className="text-3xl font-bold mb-6">PicSome Gallery</h1>
+
+      {isSearching && (
+        <p className="mb-6 text-gray-500">
+          Loading new images...
+        </p>
+      )}
 
       {error && (
         <p className="mb-6 font-semibold text-red-500">
