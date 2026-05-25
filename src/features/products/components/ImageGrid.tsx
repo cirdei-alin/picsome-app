@@ -13,7 +13,7 @@ export default function ImageGrid() {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [searchInput, setSearchInput] = useState("nature");
+  const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("nature");   
   const [error, setError] = useState("");
 

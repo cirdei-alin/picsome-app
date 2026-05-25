@@ -1,6 +1,8 @@
+import type { Image } from "@/src/types/image";
+
 type UnsplashImage = {
   id: string;
-  alt_description: string;
+  alt_description: string | null;
   urls: {
     regular: string;
   };
@@ -21,7 +23,7 @@ function generatePrice(id: string) {
   return Number(price.toFixed(2));
 }
 
-export async function fetchPictures(searchQuery = "nature") {
+export async function fetchPictures(searchQuery = "nature"): Promise<Image[]> {
   const response = await fetch(
     `https://api.unsplash.com/search/photos?query=${searchQuery}&per_page=30`,
     {
@@ -31,11 +33,15 @@ export async function fetchPictures(searchQuery = "nature") {
     }
   );
 
+  if (!response.ok) {
+    throw new Error("Failed to fetch images");
+  }
+
   const data = await response.json();
 
   return data.results.map((image: UnsplashImage) => ({
     id: image.id,
-    title: image.alt_description || "Unsplash Image",
+    title: image.alt_description || "Unsplash image",
     description: `Photo by ${image.user.name}`,
     url: image.urls.regular,
     price: generatePrice(image.id),
