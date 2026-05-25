@@ -1,19 +1,33 @@
 type SearchBarProps = {
-  searchTerm: string;
-  setSearchTerm: (value: string) => void;
+  value: string;
+  onChange: (value: string) => void;
+  onSubmit: () => void;
 };
 
 export default function SearchBar({
-  searchTerm,
-  setSearchTerm,
+  value,
+  onChange,
+  onSubmit,
 }: SearchBarProps) {
   return (
-    <input
-      type="text"
-      placeholder="Search images..."
-      value={searchTerm}
-      onChange={(event) => setSearchTerm(event.target.value)}
-      className="w-full border rounded-lg px-4 py-3 mb-6 bg-black text-white"
-    />
+    <form
+      className="mb-6 flex gap-2"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit();
+      }}
+    >
+      <input
+        type="text"
+        value={value}
+        placeholder="Search images..."
+        onChange={(event) => onChange(event.target.value)}
+        className="w-full rounded border px-4 py-2 bg-black text-white"
+      />
+
+      <button type="submit" className="border px-4 py-2 rounded">
+        Search
+      </button>
+    </form>
   );
 }

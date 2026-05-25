@@ -7,10 +7,10 @@ type ImageStore = {
   store: Image[];
 
   addToFavorites: (image: Image) => void;
-  removeFromFavorites: (id: number) => void;
+  removeFromFavorites: (id: string) => void;
 
   addToStore: (image: Image) => void;
-  removeFromStore: (id: number) => void;
+  removeFromStore: (id: string) => void;
 
   clearStore: () => void;
 };

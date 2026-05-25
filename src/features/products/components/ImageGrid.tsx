@@ -8,37 +8,35 @@ import { ImageGridSkeleton } from "./ImageGridSkeleton";
 import { ImagePreviewModal } from "./ImagePreviewModal";
 import SearchBar from "./SearchBar";
 import type { Image } from "@/src/types/image";
-import { useDebounce } from "../hooks/useDebounce";
 
 export default function ImageGrid() {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [searchTerm, setSearchTerm] = useState("nature");
+  const [searchInput, setSearchInput] = useState("nature");
+  const [searchTerm, setSearchTerm] = useState("nature");   
   const [error, setError] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 2500);
 
   const addToFavorites = useImageStore((state) => state.addToFavorites);
   const addToStore = useImageStore((state) => state.addToStore);
 
   useEffect(() => {
-    async function loadImages() {
-      try {
-        setLoading(true);
-        setError("");
+      async function loadImages() {
+        try {
+          setError("");
 
-        const pictures = await fetchPictures(debouncedSearchTerm);
+          const pictures = await fetchPictures(searchTerm);
 
-        setImages(pictures);
-      } catch {
-        setError("Something went wrong while loading images.");
-      } finally {
-        setLoading(false);
-      }
-   }
+          setImages(pictures);
+        } catch {
+          setError("Something went wrong while loading images.");
+        } finally {
+          setLoading(false);
+        }
+    }
 
     loadImages();
-  }, [debouncedSearchTerm]);  
+  }, [searchTerm]);
 
   
   if (loading) {
@@ -50,8 +48,9 @@ export default function ImageGrid() {
       <h1 className="text-3xl font-bold mb-6">PicSome Gallery</h1>
 
       <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        value={searchInput}
+        onChange={setSearchInput}
+        onSubmit={() => setSearchTerm(searchInput)}
       />
 
       {error && (
