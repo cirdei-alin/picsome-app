@@ -6,15 +6,18 @@ import { fetchPictures } from "@/src/lib/fetchPictures";
 import { ImageCard } from "./ImageCard";
 import { ImageGridSkeleton } from "./ImageGridSkeleton";
 import { ImagePreviewModal } from "./ImagePreviewModal";
-import SearchBar from "./SearchBar";
 import type { Image } from "@/src/types/image";
 
-export default function ImageGrid() {
+type ImageGridProps = {
+  searchTerm: string;
+};
+
+export default function ImageGrid({
+  searchTerm,
+}: ImageGridProps) {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [searchInput, setSearchInput] = useState("");
-  const [searchTerm, setSearchTerm] = useState("nature");   
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);  
   const [error, setError] = useState("");
 
   const addToFavorites = useImageStore((state) => state.addToFavorites);
@@ -23,6 +26,7 @@ export default function ImageGrid() {
   useEffect(() => {
       async function loadImages() {
         try {
+          setLoading(true)
           setError("");
 
           const pictures = await fetchPictures(searchTerm);
@@ -47,23 +51,13 @@ export default function ImageGrid() {
     <section className="p-6">
       <h1 className="text-3xl font-bold mb-6">PicSome Gallery</h1>
 
-      <SearchBar
-        value={searchInput}
-        onChange={setSearchInput}
-        onSubmit={() => setSearchTerm(searchInput)}
-        onClear={() => {
-          setSearchInput("");
-          setSearchTerm("nature");
-        }}
-      />
-
       {error && (
-        <p className="mb-6 text-red-500 font-semibold">
+        <p className="mb-6 font-semibold text-red-500">
           {error}
         </p>
       )}
 
-      {!error && images.length === 0 && ( 
+      {!error && images.length === 0 && (
         <p className="mb-6 text-gray-500">
           No images found for this search.
         </p>
