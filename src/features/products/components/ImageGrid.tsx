@@ -51,6 +51,10 @@ export default function ImageGrid() {
         value={searchInput}
         onChange={setSearchInput}
         onSubmit={() => setSearchTerm(searchInput)}
+        onClear={() => {
+          setSearchInput("");
+          setSearchTerm("nature");
+        }}
       />
 
       {error && (
@@ -59,9 +63,9 @@ export default function ImageGrid() {
         </p>
       )}
 
-      {!error && images.length === 0 && (
-        <p className="text-gray-500">
-          No images found.
+      {!error && images.length === 0 && ( 
+        <p className="mb-6 text-gray-500">
+          No images found for this search.
         </p>
       )}
 

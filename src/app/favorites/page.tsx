@@ -22,7 +22,6 @@ export default function FavoritesPage() {
               />
 
               <div className="p-4">
-                <h2 className="text-xl font-semibold">{image.title}</h2>
                 <p className="text-gray-600">{image.description}</p>
                 <button
                     className="border px-3 py-1 rounded mt-4"

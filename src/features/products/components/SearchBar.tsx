@@ -2,12 +2,14 @@ type SearchBarProps = {
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
+  onClear: () => void;
 };
 
 export default function SearchBar({
   value,
   onChange,
   onSubmit,
+  onClear,
 }: SearchBarProps) {
   return (
     <form
@@ -27,6 +29,10 @@ export default function SearchBar({
 
       <button type="submit" className="border px-4 py-2 rounded">
         Search
+      </button>
+
+      <button type="button" className="border px-4 py-2 rounded" onClick={onClear}>
+        Clear
       </button>
     </form>
   );

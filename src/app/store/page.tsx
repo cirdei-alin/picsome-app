@@ -41,7 +41,6 @@ export default function StorePage() {
                 <img src={image.url} alt={image.title} className="w-full h-60 object-cover" />
 
                 <div className="p-4">
-                  <h2 className="text-xl font-semibold">{image.title}</h2>
                   <p className="text-gray-600">{image.description}</p>
                   <p className="font-bold mt-2">${image.price.toFixed(2)}</p>
 
