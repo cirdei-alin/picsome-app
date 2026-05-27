@@ -1,13 +1,20 @@
 "use client";
 
+import { useState } from "react";
+
+import { ImagePreviewModal } from "@/src/features/products/components/ImagePreviewModal";
 import { useImageStore } from "@/src/store/useImageStore";
 import { FavoriteImageCard } from "@/src/features/products/components/FavoriteImageCard";
-import Link from "next/link"
+
+import type { Image } from "@/src/types/image";
+import Link from "next/link";
 
 export default function FavoritesPage() {
   const favorites = useImageStore((state) => state.favorites);
   const removeFromFavorites = useImageStore((state) => state.removeFromFavorites);
   const addToStore = useImageStore((state) => state.addToStore)
+  
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   
   return (
     <main className="p-6">
@@ -32,9 +39,17 @@ export default function FavoritesPage() {
               image={image}
               onRemove={removeFromFavorites}
               onAddToStore={addToStore}
+              onImageClick={setSelectedImage}
             />
           ))}
         </div>
+      )}
+
+      {selectedImage && (
+        <ImagePreviewModal
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
+        />
       )}
     </main>
   );

@@ -4,19 +4,22 @@ type FavoriteImageCardProps = {
   image: Image;
   onRemove: (id: string) => void;
   onAddToStore: (image: Image) => void;
+  onImageClick: (image: Image) => void;
 };
 
 export function FavoriteImageCard({
   image,
   onRemove,
   onAddToStore,
+  onImageClick,
 }: FavoriteImageCardProps) {
   return (
     <div className="border rounded-lg overflow-hidden">
       <img
         src={image.url}
         alt={image.title}
-        className="w-full h-60 object-cover"
+        className="w-full h-60 object-cover cursor-pointed"
+        onClick={() => onImageClick(image)}
       />
 
       <div className="p-4">

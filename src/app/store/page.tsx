@@ -1,23 +1,27 @@
 "use client";
 
 import { useState } from "react";
+
+import { ImagePreviewModal } from "@/src/features/products/components/ImagePreviewModal";
 import { useImageStore } from "@/src/store/useImageStore";
 import { StoreImageCard } from "@/src/features/products/components/StoreImageCard";
-import Link from "next/link"
+
+import type { Image } from "@/src/types/image";
+import Link from "next/link";
 
 export default function StorePage() {
   const store = useImageStore((state) => state.store);
   const removeFromStore = useImageStore((state) => state.removeFromStore);
   const clearStore = useImageStore((state) => state.clearStore);
+  const increaseQuantity = useImageStore((state) => state.increaseQuantity);
+  const decreaseQuantity = useImageStore((state) => state.decreaseQuantity);
 
   const [isOrdering, setIsOrdering] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   const totalItems = store.reduce((total, image) => total + image.quantity, 0);
   const totalPrice = store.reduce((total, image) => total + image.price * image.quantity, 0);
-
-  const increaseQuantity = useImageStore((state) => state.increaseQuantity);
-  const decreaseQuantity = useImageStore((state) => state.decreaseQuantity);
 
   const placeOrder = () => {
     setIsOrdering(true);
@@ -62,6 +66,7 @@ export default function StorePage() {
                 onRemove={removeFromStore}
                 onIncrease={increaseQuantity}
                 onDecrease={decreaseQuantity}
+                onImageClick={setSelectedImage}
               />
             ))}
           </div>
@@ -87,6 +92,13 @@ export default function StorePage() {
           </div>
         </>
       ) : null}
+
+      {selectedImage && (
+        <ImagePreviewModal
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
+        />
+      )}
     </main>
   );
 }
