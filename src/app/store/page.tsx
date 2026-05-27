@@ -13,6 +13,12 @@ export default function StorePage() {
   const [isOrdering, setIsOrdering] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
+  const totalItems = store.reduce((total, image) => total + image.quantity, 0);
+  const totalPrice = store.reduce((total, image) => total + image.price * image.quantity, 0);
+
+  const increaseQuantity = useImageStore((state) => state.increaseQuantity);
+  const decreaseQuantity = useImageStore((state) => state.decreaseQuantity);
+
   const placeOrder = () => {
     setIsOrdering(true);
 
@@ -54,20 +60,25 @@ export default function StorePage() {
                 key={image.id}
                 image={image}
                 onRemove={removeFromStore}
+                onIncrease={increaseQuantity}
+                onDecrease={decreaseQuantity}
               />
             ))}
           </div>
 
-          <div className="mt-6 border-t pt-4">
-            <p className="text-2xl font-bold">
-              Total: $
-              {store
-                .reduce((total, image) => total + image.price, 0)
-                .toFixed(2)}
-            </p>
+          <div className="mt-6 border-t pt-4 max-w-md">
+            <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+
+            <div className="space-y-2">
+              <p>Total items: {totalItems}</p>
+              <p className="text-xl font-bold">
+                Total price: ${totalPrice.toFixed(2)}
+              </p>
+            </div>
+            
 
             <button
-              className="border px-4 py-2 rounded mt-4"
+              className="border px-4 py-2 rounded mt-6 hover:bg-white hover:text-black transition"
               disabled={isOrdering}
               onClick={placeOrder}
             >
