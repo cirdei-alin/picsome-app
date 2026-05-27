@@ -14,10 +14,10 @@ export default function HomePage() {
       <SearchBar
         value={searchInput}
         onChange={setSearchInput}
-        onSubmit={() => setSearchTerm(searchInput || "nature")}
+        onSubmit={() => setSearchTerm(searchInput || "random")}
         onClear={() => {
           setSearchInput("");
-          setSearchTerm("nature");
+          setSearchTerm("random");
         }}
       />
 
