@@ -6,7 +6,8 @@ import { FavoriteImageCard } from "@/src/features/products/components/FavoriteIm
 export default function FavoritesPage() {
   const favorites = useImageStore((state) => state.favorites);
   const removeFromFavorites = useImageStore((state) => state.removeFromFavorites);
-
+  const addToStore = useImageStore((state) => state.addToStore)
+  
   return (
     <main className="p-6">
       <h1 className="text-3xl font-bold mb-6">Favorites</h1>
@@ -20,6 +21,7 @@ export default function FavoritesPage() {
               key={image.id}
               image={image}
               onRemove={removeFromFavorites}
+              onAddToStore={addToStore}
             />
           ))}
         </div>
