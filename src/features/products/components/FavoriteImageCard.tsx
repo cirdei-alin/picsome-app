@@ -35,7 +35,7 @@ export function FavoriteImageCard({
                 className="border px-3 py-1 rounded"
                 onClick={() => onRemove(image.id)}
             >
-            Remove from Favorites
+                Remove from Favorites
             </button>
         </div>
       </div>

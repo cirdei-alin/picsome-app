@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useImageStore } from "@/src/store/useImageStore";
 import { StoreImageCard } from "@/src/features/products/components/StoreImageCard";
+import Link from "next/link"
 
 export default function StorePage() {
   const store = useImageStore((state) => state.store);
@@ -35,7 +36,16 @@ export default function StorePage() {
       )}
 
       {store.length === 0 && !orderPlaced ? (
-        <p>No images in store yet.</p>
+        <div className="mt-10">
+          <h2 className="text-2xl font-bold mb-4">Your store is empty</h2>
+          <p className="text-gray-500 mb-4">
+            Add images from the gallery to start building your order.
+          </p>
+
+          <Link href="/" className="inline-block border px-4 py-2 rounded hover:bg-white hover:text-black transition">
+            Go to Gallery
+          </Link>
+        </div>
       ) : store.length > 0 ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

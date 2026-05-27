@@ -2,6 +2,7 @@
 
 import { useImageStore } from "@/src/store/useImageStore";
 import { FavoriteImageCard } from "@/src/features/products/components/FavoriteImageCard";
+import Link from "next/link"
 
 export default function FavoritesPage() {
   const favorites = useImageStore((state) => state.favorites);
@@ -13,7 +14,16 @@ export default function FavoritesPage() {
       <h1 className="text-3xl font-bold mb-6">Favorites</h1>
 
       {favorites.length === 0 ? (
-        <p>No favorite images yet.</p>
+        <div className="mt-10">
+          <h2 className="text-2xl font-bold mb-4">No favorites yet</h2>
+          <p className="text-gray-500 mb-4">
+            Start exploring the gallery and save your favorite images.
+          </p>
+
+          <Link href="/" className="inline-block border px-4 py-2 rounded hover:bg-white hover:text-black transition">
+            Go to Gallery
+          </Link>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {favorites.map((image) => (
