@@ -8,6 +8,7 @@ import { StoreImageCard } from "@/src/features/products/components/StoreImageCar
 
 import type { Image } from "@/src/types/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function StorePage() {
   const store = useImageStore((state) => state.store);
@@ -30,6 +31,7 @@ export default function StorePage() {
       clearStore();
       setIsOrdering(false);
       setOrderPlaced(true);
+      toast.success("Order placed successfully");
 
       setTimeout(() => setOrderPlaced(false), 3000);
     }, 2000);

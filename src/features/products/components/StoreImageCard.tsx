@@ -1,4 +1,5 @@
 import type { Image } from "@/src/types/image";
+import toast from "react-hot-toast";
 
 type StoreItem = Image & {
   quantity: number;
@@ -53,7 +54,10 @@ export function StoreImageCard({
 
             <button
                 className="border px-3 py-1 rounded"
-                onClick={() => onRemove(image.id)}
+                onClick={() => {
+                  onRemove(image.id);
+                  toast.success("Removed from Store");
+                }}
             >
                 Remove from Store
             </button>

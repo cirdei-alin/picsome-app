@@ -1,4 +1,5 @@
 import type { Image } from "@/src/types/image";
+import toast from "react-hot-toast";
 
 type ImageCardProps = {
   image: Image;
@@ -29,14 +30,20 @@ export function ImageCard({
         <div className="flex gap-2 mt-4">
           <button
             className="border px-3 py-1 rounded"
-            onClick={() => onAddToFavorites(image)}
+            onClick={ () => {
+              onAddToFavorites(image);
+              toast.success("Added to Favorites");
+            }}
           >
             Add to Favorites
           </button>
 
           <button
             className="border px-3 py-1 rounded"
-            onClick={() => onAddToStore(image)}
+            onClick={() => {
+              onAddToStore(image);
+              toast.success("Added to Store");
+            }}
           >
             Add to Store
           </button>
