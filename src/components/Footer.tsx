@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
         <div>
           <p className="text-lg font-black text-white">
-            Designed & Developed by Alin
+            Designed & Developed by Cîrdei Alin
           </p>
 
           <p className="mt-1 text-sm text-slate-400">
