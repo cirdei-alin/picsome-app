@@ -12,13 +12,11 @@ type ImageGridProps = {
   searchTerm: string;
 };
 
-export default function ImageGrid({
-  searchTerm,
-}: ImageGridProps) {
+export default function ImageGrid({ searchTerm }: ImageGridProps) {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<Image | null>(null);  
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [error, setError] = useState("");
 
   const addToFavorites = useImageStore((state) => state.addToFavorites);
@@ -47,34 +45,44 @@ export default function ImageGrid({
 
     loadImages();
   }, [searchTerm]);
-  
+
   if (loading) {
     return <ImageGridSkeleton />;
   }
 
   return (
-    <section className="p-6">
-      <h1 className="text-3xl font-bold mb-6">PicSome Gallery</h1>
+    <section>
+      <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-fuchsia-300">
+            PicSome Gallery
+          </p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-white md:text-4xl">
+            Fresh picks for{" "}
+            <span className="text-cyan-300">{searchTerm}</span>
+          </h2>
+        </div>
 
-      {isSearching && (
-        <p className="mb-6 text-gray-500">
-          Loading new images...
-        </p>
-      )}
+        {isSearching && (
+          <p className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-bold text-cyan-200">
+            Loading new images...
+          </p>
+        )}
+      </div>
 
       {error && (
-        <p className="mb-6 font-semibold text-red-500">
+        <p className="mb-6 rounded-2xl border border-red-400/20 bg-red-500/10 px-5 py-4 font-semibold text-red-200">
           {error}
         </p>
       )}
 
       {!error && images.length === 0 && (
-        <p className="mb-6 text-gray-500">
+        <p className="mb-6 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-slate-300">
           No images found for this search.
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
         {images.map((image) => (
           <ImageCard
             key={image.id}
