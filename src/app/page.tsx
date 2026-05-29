@@ -34,7 +34,7 @@ export default function HomePage() {
           <SearchBar
             value={searchInput}
             onChange={setSearchInput}
-            onSubmit={() => setSearchTerm(searchInput || "random")}
+            onSubmit={() => setSearchTerm(searchInput || "nature")}
             onClear={() => {
               setSearchInput("");
               setSearchTerm("nature");

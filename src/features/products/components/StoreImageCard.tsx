@@ -35,12 +35,12 @@ export function StoreImageCard({
       </button>
 
       <div className="p-5">
-        <div className="mb-4 flex items-start justify-between gap-4">
+        <div className="mb-5 flex items-start justify-between gap-4">
           <p className="line-clamp-2 text-sm leading-6 text-slate-400">
             {image.description}
           </p>
 
-          <p className="shrink-0 rounded-full bg-white px-3 py-1 text-sm font-black text-slate-950">
+          <p className="shrink-0 rounded-full bg-white px-3 py-1 text-sm font-black text-slate-950 shadow-lg">
             ${image.price.toFixed(2)}
           </p>
         </div>
@@ -51,7 +51,7 @@ export function StoreImageCard({
               Quantity
             </span>
 
-            <span className="text-lg font-black text-white">
+            <span className="rounded-full bg-white/10 px-3 py-1 text-lg font-black text-white">
               {image.quantity}
             </span>
           </div>
@@ -83,12 +83,15 @@ export function StoreImageCard({
         </div>
 
         <button
-          className="w-full rounded-2xl border border-white/10 px-4 py-3 text-sm font-bold text-slate-300 transition hover:border-red-300/40 hover:bg-red-500/10 hover:text-red-100"
+          className="group/btn flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm font-bold text-slate-300 transition hover:border-red-300/40 hover:bg-red-500/10 hover:text-red-100"
           onClick={() => {
             onRemove(image.id);
             toast.success("Removed from Store");
           }}
         >
+          <span className="text-lg transition group-hover/btn:scale-125">
+            ×
+          </span>
           Remove from Store
         </button>
       </div>
