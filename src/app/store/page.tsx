@@ -44,21 +44,21 @@ export default function StorePage() {
     <main className="mx-auto w-full max-w-7xl flex-1 px-5 py-10">
       <section className="mb-10 rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl md:p-10">
         <p className="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm font-bold text-cyan-200">
-          Your visual checkout
+          Your selected images
         </p>
 
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
-              Store{" "}
+              Cart{" "}
               <span className="bg-gradient-to-r from-cyan-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">
                 collection.
               </span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-slate-300">
-              Review your selected images, adjust quantities and place your
-              order when everything looks perfect.
+              Review your selected images, adjust quantities and complete 
+              your order when everything looks perfect.
             </p>
           </div>
 
@@ -82,7 +82,7 @@ export default function StorePage() {
         <div className="mb-6 rounded-3xl border border-emerald-300/20 bg-emerald-400/10 px-6 py-5 text-emerald-100 shadow-xl shadow-emerald-950/20">
           <p className="font-black">Thank you for your order!</p>
           <p className="mt-1 text-sm text-emerald-200/80">
-            Your store was cleared and the order was placed successfully.
+            Your cart was cleared and the order was placed successfully.
           </p>
         </div>
       )}
@@ -95,7 +95,7 @@ export default function StorePage() {
             </div>
 
             <h2 className="text-3xl font-black text-white">
-              Your store is empty
+              Your cart is empty
             </h2>
 
             <p className="mt-3 text-slate-400">

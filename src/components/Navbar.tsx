@@ -16,7 +16,7 @@ const links = [
   },
   {
     href: "/store",
-    label: "Store",
+    label: "Cart",
     icon: "🛒",
   },
 ];

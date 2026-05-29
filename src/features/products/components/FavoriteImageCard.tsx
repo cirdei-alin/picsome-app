@@ -44,13 +44,13 @@ export function FavoriteImageCard({
             className="group/btn flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-cyan-400 px-4 py-3 text-sm font-black text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.03]"
             onClick={() => {
               onAddToStore(image);
-              toast.success("Added to Store");
+              toast.success("Added to Cart");
             }}
           >
             <span className="text-lg transition group-hover/btn:scale-125">
               🛒
             </span>
-            Add to Store
+            Add to Cart
           </button>
 
           <button

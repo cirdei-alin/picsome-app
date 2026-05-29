@@ -86,13 +86,13 @@ export function StoreImageCard({
           className="group/btn flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm font-bold text-slate-300 transition hover:border-red-300/40 hover:bg-red-500/10 hover:text-red-100"
           onClick={() => {
             onRemove(image.id);
-            toast.success("Removed from Store");
+            toast.success("Removed from Cart");
           }}
         >
           <span className="text-lg transition group-hover/btn:scale-125">
             ×
           </span>
-          Remove from Store
+          Remove from Cart
         </button>
       </div>
     </article>
