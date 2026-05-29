@@ -7,7 +7,7 @@ import SearchBar from "../features/products/components/SearchBar";
 
 export default function HomePage() {
   const [searchInput, setSearchInput] = useState("");
-  const [searchTerm, setSearchTerm] = useState("random");
+  const [searchTerm, setSearchTerm] = useState("nature");
 
   return (
     <main className="mx-auto w-full max-w-7xl flex-1 px-5 py-10">
@@ -37,7 +37,7 @@ export default function HomePage() {
             onSubmit={() => setSearchTerm(searchInput || "random")}
             onClear={() => {
               setSearchInput("");
-              setSearchTerm("random");
+              setSearchTerm("nature");
             }}
           />
         </div>
