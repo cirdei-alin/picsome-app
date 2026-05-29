@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gallery Experience",
-  description: "Premium gallery experience",
+  title: "PicSome Studio • Alin",
+  description: "A premium gallery experience built with Next.js, TypeScript, Tailwind CSS and Zustand.",
 };
 
 export default function RootLayout({
