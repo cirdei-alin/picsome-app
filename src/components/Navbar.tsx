@@ -43,8 +43,8 @@ export default function Navbar() {
             <p className="text-xl font-black tracking-tight text-white">
               PicSome
             </p>
-            <p className="text-xs font-medium text-slate-400">
-              premium gallery
+            <p className="mt-1 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-200">
+              ASSIST Software
             </p>
           </div>
         </Link>

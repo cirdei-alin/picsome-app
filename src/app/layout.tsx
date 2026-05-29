@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PicSome App",
-  description: "Photo gallery and store app",
+  title: "Gallery Experience",
+  description: "Premium gallery experience",
 };
 
 export default function RootLayout({
