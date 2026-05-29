@@ -45,3 +45,21 @@ a {
 ::selection {
   background: rgba(236, 72, 153, 0.35);
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050511;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #22d3ee);
+  border: 3px solid #050511;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #f0abfc, #67e8f9);
+}

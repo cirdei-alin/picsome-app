@@ -59,7 +59,9 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
           </p>
           <h2 className="mt-2 text-3xl font-black tracking-tight text-white md:text-4xl">
             Fresh picks for{" "}
-            <span className="text-cyan-300">{searchTerm}</span>
+            <span className="rounded-2xl bg-cyan-300/10 px-3 py-1 text-cyan-300 ring-1 ring-cyan-300/20">
+              {searchTerm}
+            </span>
           </h2>
         </div>
 
