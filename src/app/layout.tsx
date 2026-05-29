@@ -35,14 +35,30 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster
-          position="top-right"
+          position="bottom-left"
+          gutter={14}
           toastOptions={{
+            duration: 2000,
             style: {
-              background: "#111",
+              background: "rgba(15, 23, 42, 0.95)",
               color: "#fff",
-              border: "1px solid rgba(255,255,255,0.12)",
-              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
-              borderRadius: "16px",
+              border: "1px solid rgba(255, 255, 255, 0.14)",
+              borderRadius: "22px",
+              padding: "16px 20px",
+              boxShadow: "0 24px 80px rgba(0, 0, 0, 0.55)",
+              backdropFilter: "blur(16px)",
+            },
+            success: {
+              iconTheme: {
+                primary: "#22c55e",
+                secondary: "#ffffff",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#ffffff",
+              },
             },
           }}
         />
