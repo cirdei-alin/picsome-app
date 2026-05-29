@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 import { ImagePreviewModal } from "@/src/features/products/components/ImagePreviewModal";
 import { useImageStore } from "@/src/store/useImageStore";
 import { StoreImageCard } from "@/src/features/products/components/StoreImageCard";
 
 import type { Image } from "@/src/types/image";
-import Link from "next/link";
-import toast from "react-hot-toast";
 
 export default function StorePage() {
   const store = useImageStore((state) => state.store);
@@ -22,7 +22,10 @@ export default function StorePage() {
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   const totalItems = store.reduce((total, image) => total + image.quantity, 0);
-  const totalPrice = store.reduce((total, image) => total + image.price * image.quantity, 0);
+  const totalPrice = store.reduce(
+    (total, image) => total + image.price * image.quantity,
+    0
+  );
 
   const placeOrder = () => {
     setIsOrdering(true);
@@ -34,33 +37,83 @@ export default function StorePage() {
       toast.success("Order placed successfully");
 
       setTimeout(() => setOrderPlaced(false), 3000);
-    }, 2000);
+    }, 4000);
   };
 
   return (
-    <main className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Store</h1>
+    <main className="mx-auto w-full max-w-7xl flex-1 px-5 py-10">
+      <section className="mb-10 rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl md:p-10">
+        <p className="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm font-bold text-cyan-200">
+          Your visual checkout
+        </p>
+
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div>
+            <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
+              Store{" "}
+              <span className="bg-gradient-to-r from-cyan-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">
+                collection.
+              </span>
+            </h1>
+
+            <p className="mt-4 max-w-2xl text-slate-300">
+              Review your selected images, adjust quantities and place your
+              order when everything looks perfect.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-3xl border border-white/10 bg-slate-950/70 px-6 py-4 text-center shadow-xl shadow-black/20">
+              <p className="text-3xl font-black text-white">{totalItems}</p>
+              <p className="text-sm font-semibold text-slate-400">items</p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-slate-950/70 px-6 py-4 text-center shadow-xl shadow-black/20">
+              <p className="text-3xl font-black text-white">
+                ${totalPrice.toFixed(2)}
+              </p>
+              <p className="text-sm font-semibold text-slate-400">total</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {orderPlaced && (
-        <p className="text-green-500 mb-4 font-bold">
-          Thank you for your order!
-        </p>
+        <div className="mb-6 rounded-3xl border border-emerald-300/20 bg-emerald-400/10 px-6 py-5 text-emerald-100 shadow-xl shadow-emerald-950/20">
+          <p className="font-black">Thank you for your order!</p>
+          <p className="mt-1 text-sm text-emerald-200/80">
+            Your store was cleared and the order was placed successfully.
+          </p>
+        </div>
       )}
 
       {store.length === 0 && !orderPlaced ? (
-        <div className="mt-10">
-          <h2 className="text-2xl font-bold mb-4">Your store is empty</h2>
-          <p className="text-gray-500 mb-4">
-            Add images from the gallery to start building your order.
-          </p>
+        <section className="grid min-h-[360px] place-items-center rounded-[2rem] border border-dashed border-white/15 bg-white/[0.03] p-8 text-center shadow-2xl shadow-black/20 backdrop-blur-xl">
+          <div className="max-w-md">
+            <div className="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-4xl shadow-lg shadow-cyan-500/25">
+              🛒
+            </div>
 
-          <Link href="/" className="inline-block border px-4 py-2 rounded hover:bg-white hover:text-black transition">
-            Go to Gallery
-          </Link>
-        </div>
+            <h2 className="text-3xl font-black text-white">
+              Your store is empty
+            </h2>
+
+            <p className="mt-3 text-slate-400">
+              Add images from the gallery to start building your premium visual
+              order.
+            </p>
+
+            <Link
+              href="/"
+              className="mt-6 inline-flex rounded-2xl bg-white px-6 py-3 font-black text-slate-950 shadow-lg transition hover:scale-105 hover:bg-cyan-200"
+            >
+              Go to Gallery
+            </Link>
+          </div>
+        </section>
       ) : store.length > 0 ? (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <section className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
+          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
             {store.map((image) => (
               <StoreImageCard
                 key={image.id}
@@ -73,26 +126,43 @@ export default function StorePage() {
             ))}
           </div>
 
-          <div className="mt-6 border-t pt-4 max-w-md">
-            <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+          <aside className="h-fit rounded-[2rem] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl lg:sticky lg:top-28">
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-cyan-300">
+              Order Summary
+            </p>
 
-            <div className="space-y-2">
-              <p>Total items: {totalItems}</p>
-              <p className="text-xl font-bold">
-                Total price: ${totalPrice.toFixed(2)}
-              </p>
+            <h2 className="mt-2 text-3xl font-black text-white">Checkout</h2>
+
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <span className="text-slate-400">Total items</span>
+                <span className="font-black text-white">{totalItems}</span>
+              </div>
+
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <span className="text-slate-400">Subtotal</span>
+                <span className="font-black text-white">
+                  ${totalPrice.toFixed(2)}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between rounded-3xl bg-white px-5 py-4">
+                <span className="font-black text-slate-950">Total price</span>
+                <span className="text-2xl font-black text-slate-950">
+                  ${totalPrice.toFixed(2)}
+                </span>
+              </div>
             </div>
-            
 
             <button
-              className="border px-4 py-2 rounded mt-6 hover:bg-white hover:text-black transition"
+              className="mt-6 w-full rounded-2xl bg-gradient-to-r from-fuchsia-500 to-cyan-400 px-6 py-4 font-black text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
               disabled={isOrdering}
               onClick={placeOrder}
             >
               {isOrdering ? "Placing Order..." : "Place Order"}
             </button>
-          </div>
-        </>
+          </aside>
+        </section>
       ) : null}
 
       {selectedImage && (
