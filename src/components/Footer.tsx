@@ -14,7 +14,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <a
-            href="https://github.com/cirdei-alin"
+            href="https://github.com/cirdei-alin/picsome-app"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 px-5 py-4 transition hover:border-fuchsia-300/40 hover:bg-fuchsia-300/10"
@@ -30,7 +30,7 @@ export default function Footer() {
             <div className="border-l border-white/10 pl-4">
               <p className="text-sm font-black text-white">GitHub</p>
               <p className="text-xs text-slate-400 transition group-hover:text-fuchsia-200">
-                cirdei-alin
+                View Source Code
               </p>
             </div>
           </a>

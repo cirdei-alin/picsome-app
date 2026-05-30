@@ -18,7 +18,7 @@ function generatePrice(id: string) {
     hash += id.charCodeAt(i) * (i + 1);
   }
 
-  const price = (hash % 2000) / 100 + 5;
+  const price = ((hash % 2000) / 100) + 5;
 
   return Number(price.toFixed(2));
 }
@@ -32,7 +32,7 @@ export async function fetchPictures(searchQuery = "nature"): Promise<Image[]> {
       },
     }
   );
-
+  // TODO: Integrate with a global error management solution.
   if (!response.ok) {
     throw new Error("Failed to fetch images");
   }
