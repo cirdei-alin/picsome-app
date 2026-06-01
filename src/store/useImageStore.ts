@@ -2,31 +2,31 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Image } from "@/src/types/image";
 
-type StoreItem = Image & {
+type CartItem = Image & {
   quantity: number;
-}
+};
 
 type ImageStore = {
   favorites: Image[];
-  store: StoreItem[];
+  cart: CartItem[];
 
   addToFavorites: (image: Image) => void;
   removeFromFavorites: (id: string) => void;
 
-  addToStore: (image: Image) => void;
-  removeFromStore: (id: string) => void;
+  addToCart: (image: Image) => void;
+  removeFromCart: (id: string) => void;
 
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
 
-  clearStore: () => void;
+  clearCart: () => void;
 };
 
 export const useImageStore = create<ImageStore>()(
   persist(
     (set) => ({
       favorites: [],
-      store: [],
+      cart: [],
 
       addToFavorites: (image) =>
         set((state) => {
@@ -46,55 +46,68 @@ export const useImageStore = create<ImageStore>()(
           favorites: state.favorites.filter((image) => image.id !== id),
         })),
 
-      addToStore: (image) =>
+      addToCart: (image) =>
         set((state) => {
-          const alreadyExists = state.store.find(
-            (storeImage) => storeImage.id === image.id
+          const alreadyExists = state.cart.find(
+            (cartImage) => cartImage.id === image.id
           );
 
           if (alreadyExists) {
             return {
-              store: state.store.map((storeImage) => storeImage.id === image.id
-              ? {...storeImage, quantity: storeImage.quantity + 1 }
-              : storeImage
+              cart: state.cart.map((cartImage) =>
+                cartImage.id === image.id
+                  ? { ...cartImage, quantity: cartImage.quantity + 1 }
+                  : cartImage
               ),
             };
           }
 
           return {
-            store: [...state.store, {...image, quantity: 1}],
+            cart: [...state.cart, { ...image, quantity: 1 }],
           };
         }),
 
-      increaseQuantity: (id) =>
+      removeFromCart: (id) =>
         set((state) => ({
-          store: state.store.map((image) =>
-            image.id === id 
-            ? {...image, quantity: image.quantity + 1} 
-            : image
-            ),
+          cart: state.cart.filter((image) => image.id !== id),
         })),
 
-      decreaseQuantity: (id) => 
+      increaseQuantity: (id) =>
         set((state) => ({
-          store: state.store.map((image) =>
-            image.id === id 
-            ? {...image, quantity: image.quantity -1} 
-            : image)
-            .filter((image) => image.quantity > 0
+          cart: state.cart.map((image) =>
+            image.id === id
+              ? { ...image, quantity: image.quantity + 1 }
+              : image
           ),
         })),
 
-      removeFromStore: (id) =>
+      decreaseQuantity: (id) =>
         set((state) => ({
-          store: state.store.filter((image) => image.id !== id),
+          cart: state.cart
+            .map((image) =>
+              image.id === id
+                ? { ...image, quantity: image.quantity - 1 }
+                : image
+            )
+            .filter((image) => image.quantity > 0),
         })),
 
-      clearStore: () => set({ store: [] }),
+      clearCart: () => set({ cart: [] }),
     }),
-
     {
       name: "picsome-image-store",
+      migrate: (persistedState) => {
+        const state = persistedState as {
+          favorites?: Image[];
+          store?: CartItem[];
+          cart?: CartItem[];
+        };
+
+        return {
+          favorites: state.favorites ?? [],
+          cart: state.cart ?? state.store ?? [],
+        };
+      },
     }
   )
 );

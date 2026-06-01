@@ -1,25 +1,25 @@
 import type { Image } from "@/src/types/image";
 import toast from "react-hot-toast";
 
-type StoreItem = Image & {
+type CartItem = Image & {
   quantity: number;
 };
 
-type StoreImageCardProps = {
-  image: StoreItem;
+type CartImageCardProps = {
+  image: CartItem;
   onRemove: (id: string) => void;
   onIncrease: (id: string) => void;
   onDecrease: (id: string) => void;
   onImageClick: (image: Image) => void;
 };
 
-export function StoreImageCard({
+export function CartImageCard({
   image,
   onRemove,
   onIncrease,
   onDecrease,
   onImageClick,
-}: StoreImageCardProps) {
+}: CartImageCardProps) {
   return (
     <article className="group overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] shadow-2xl shadow-black/20 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/40 hover:bg-white/[0.07]">
       <button

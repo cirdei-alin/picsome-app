@@ -6,14 +6,14 @@ import toast from "react-hot-toast";
 
 import { ImagePreviewModal } from "@/src/features/products/components/ImagePreviewModal";
 import { useImageStore } from "@/src/store/useImageStore";
-import { StoreImageCard } from "@/src/features/products/components/StoreImageCard";
+import { CartImageCard } from "@/src/features/products/components/CartImageCard";
 
 import type { Image } from "@/src/types/image";
 
-export default function StorePage() {
-  const store = useImageStore((state) => state.store);
-  const removeFromStore = useImageStore((state) => state.removeFromStore);
-  const clearStore = useImageStore((state) => state.clearStore);
+export default function CartPage() {
+  const cart = useImageStore((state) => state.cart);
+  const removeFromCart = useImageStore((state) => state.removeFromCart);
+  const clearCart = useImageStore((state) => state.clearCart);
   const increaseQuantity = useImageStore((state) => state.increaseQuantity);
   const decreaseQuantity = useImageStore((state) => state.decreaseQuantity);
 
@@ -21,8 +21,9 @@ export default function StorePage() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
-  const totalItems = store.reduce((total, image) => total + image.quantity, 0);
-  const totalPrice = store.reduce(
+  const totalItems = cart.reduce((total, image) => total + image.quantity, 0);
+
+  const totalPrice = cart.reduce(
     (total, image) => total + image.price * image.quantity,
     0
   );
@@ -31,13 +32,13 @@ export default function StorePage() {
     setIsOrdering(true);
 
     setTimeout(() => {
-      clearStore();
+      clearCart();
       setIsOrdering(false);
       setOrderPlaced(true);
       toast.success("Order placed successfully");
 
       setTimeout(() => setOrderPlaced(false), 3000);
-    }, 4000);
+    }, 2000);
   };
 
   return (
@@ -57,8 +58,8 @@ export default function StorePage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-slate-300">
-              Review your selected images, adjust quantities and complete 
-              your order when everything looks perfect.
+              Review your selected images, adjust quantities and complete your
+              order when everything looks perfect.
             </p>
           </div>
 
@@ -87,7 +88,7 @@ export default function StorePage() {
         </div>
       )}
 
-      {store.length === 0 && !orderPlaced ? (
+      {cart.length === 0 && !orderPlaced ? (
         <section className="grid min-h-[360px] place-items-center rounded-[2rem] border border-dashed border-white/15 bg-white/[0.03] p-8 text-center shadow-2xl shadow-black/20 backdrop-blur-xl">
           <div className="max-w-md">
             <div className="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-4xl shadow-lg shadow-cyan-500/25">
@@ -111,14 +112,14 @@ export default function StorePage() {
             </Link>
           </div>
         </section>
-      ) : store.length > 0 ? (
+      ) : cart.length > 0 ? (
         <section className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
           <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
-            {store.map((image) => (
-              <StoreImageCard
+            {cart.map((image) => (
+              <CartImageCard
                 key={image.id}
                 image={image}
-                onRemove={removeFromStore}
+                onRemove={removeFromCart}
                 onIncrease={increaseQuantity}
                 onDecrease={decreaseQuantity}
                 onImageClick={setSelectedImage}

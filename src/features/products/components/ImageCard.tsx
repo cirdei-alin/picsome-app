@@ -7,8 +7,8 @@ type ImageCardProps = {
   onImageClick: (image: Image) => void;
   onAddToFavorites: (image: Image) => void;
   onRemoveFromFavorites: (id: string) => void;
-  onAddToStore: (image: Image) => void;
-  onRemoveFromStore: (id: string) => void;
+  onAddToCart: (image: Image) => void;
+  onRemoveFromCart: (id: string) => void;
 };
 
 export function ImageCard({
@@ -18,8 +18,8 @@ export function ImageCard({
   onImageClick,
   onAddToFavorites,
   onRemoveFromFavorites,
-  onAddToStore,
-  onRemoveFromStore,
+  onAddToCart,
+  onRemoveFromCart,
 }: ImageCardProps) {
   const handleFavoriteClick = () => {
     if (isFavorite) {
@@ -32,11 +32,11 @@ export function ImageCard({
 
   const handleCartClick = () => {
     if (isInCart) {
-      onRemoveFromStore(image.id);
+      onRemoveFromCart(image.id);
       return;
     }
 
-    onAddToStore(image);
+    onAddToCart(image);
   };
 
   return (
@@ -80,6 +80,7 @@ export function ImageCard({
             >
               {isFavorite ? "♥" : "♡"}
             </span>
+
             {isFavorite ? "Saved" : "Favorite"}
           </button>
 
@@ -101,7 +102,9 @@ export function ImageCard({
               {isInCart ? "✓" : "🛒"}
             </span>
 
-            <span className="relative">{isInCart ? "Added" : "Add to Cart"}</span>
+            <span className="relative">
+              {isInCart ? "Added" : "Add to Cart"}
+            </span>
           </button>
         </div>
       </div>

@@ -11,10 +11,15 @@ import type { Image } from "@/src/types/image";
 
 export default function FavoritesPage() {
   const favorites = useImageStore((state) => state.favorites);
-  const removeFromFavorites = useImageStore((state) => state.removeFromFavorites);
-  const addToStore = useImageStore((state) => state.addToStore);
-  const store = useImageStore((state) => state.store);
-  const removeFromStore = useImageStore((state) => state.removeFromStore);
+  const cart = useImageStore((state) => state.cart);
+
+  const removeFromFavorites = useImageStore(
+    (state) => state.removeFromFavorites
+  );
+
+  const addToCart = useImageStore((state) => state.addToCart);
+  const removeFromCart = useImageStore((state) => state.removeFromCart);
+
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   return (
@@ -35,7 +40,7 @@ export default function FavoritesPage() {
 
             <p className="mt-4 max-w-2xl text-slate-300">
               Keep your best image picks in one place and move them to your
-              store whenever you are ready.
+              cart whenever you are ready.
             </p>
           </div>
 
@@ -78,10 +83,10 @@ export default function FavoritesPage() {
             <FavoriteImageCard
               key={image.id}
               image={image}
-              isInCart={store.some((cartImage) => cartImage.id === image.id)}
+              isInCart={cart.some((cartImage) => cartImage.id === image.id)}
               onRemove={removeFromFavorites}
-              onAddToStore={addToStore}
-              onRemoveFromStore={removeFromStore}
+              onAddToCart={addToCart}
+              onRemoveFromCart={removeFromCart}
               onImageClick={setSelectedImage}
             />
           ))}

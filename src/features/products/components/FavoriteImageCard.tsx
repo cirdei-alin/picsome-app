@@ -5,8 +5,8 @@ type FavoriteImageCardProps = {
   image: Image;
   isInCart: boolean;
   onRemove: (id: string) => void;
-  onAddToStore: (image: Image) => void;
-  onRemoveFromStore: (id: string) => void;
+  onAddToCart: (image: Image) => void;
+  onRemoveFromCart: (id: string) => void;
   onImageClick: (image: Image) => void;
 };
 
@@ -14,17 +14,17 @@ export function FavoriteImageCard({
   image,
   isInCart,
   onRemove,
-  onAddToStore,
-  onRemoveFromStore,
+  onAddToCart,
+  onRemoveFromCart,
   onImageClick,
 }: FavoriteImageCardProps) {
   const handleCartClick = () => {
     if (isInCart) {
-      onRemoveFromStore(image.id);
+      onRemoveFromCart(image.id);
       return;
     }
 
-    onAddToStore(image);
+    onAddToCart(image);
   };
 
   return (
@@ -71,7 +71,9 @@ export function FavoriteImageCard({
               {isInCart ? "✓" : "🛒"}
             </span>
 
-            <span className="relative">{isInCart ? "Added" : "Add to Cart"}</span>
+            <span className="relative">
+              {isInCart ? "Added" : "Add to Cart"}
+            </span>
           </button>
 
           <button

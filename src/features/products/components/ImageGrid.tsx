@@ -20,15 +20,15 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
   const [error, setError] = useState("");
 
   const favorites = useImageStore((state) => state.favorites);
-  const store = useImageStore((state) => state.store);
+  const cart = useImageStore((state) => state.cart);
 
   const addToFavorites = useImageStore((state) => state.addToFavorites);
   const removeFromFavorites = useImageStore(
     (state) => state.removeFromFavorites
   );
 
-  const addToStore = useImageStore((state) => state.addToStore);
-  const removeFromStore = useImageStore((state) => state.removeFromStore);
+  const addToCart = useImageStore((state) => state.addToCart);
+  const removeFromCart = useImageStore((state) => state.removeFromCart);
 
   useEffect(() => {
     async function loadImages() {
@@ -65,6 +65,7 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-fuchsia-300">
             PicSome Gallery
           </p>
+
           <h2 className="mt-2 text-3xl font-black tracking-tight text-white md:text-4xl">
             Fresh picks for{" "}
             <span className="rounded-2xl bg-cyan-300/10 px-3 py-1 text-cyan-300 ring-1 ring-cyan-300/20">
@@ -98,7 +99,7 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
             (favorite) => favorite.id === image.id
           );
 
-          const isInCart = store.some((cartImage) => cartImage.id === image.id);
+          const isInCart = cart.some((cartImage) => cartImage.id === image.id);
 
           return (
             <ImageCard
@@ -109,8 +110,8 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
               onImageClick={setSelectedImage}
               onAddToFavorites={addToFavorites}
               onRemoveFromFavorites={removeFromFavorites}
-              onAddToStore={addToStore}
-              onRemoveFromStore={removeFromStore}
+              onAddToCart={addToCart}
+              onRemoveFromCart={removeFromCart}
             />
           );
         })}
