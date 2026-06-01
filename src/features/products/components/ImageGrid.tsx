@@ -19,8 +19,16 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [error, setError] = useState("");
 
+  const favorites = useImageStore((state) => state.favorites);
+  const store = useImageStore((state) => state.store);
+
   const addToFavorites = useImageStore((state) => state.addToFavorites);
+  const removeFromFavorites = useImageStore(
+    (state) => state.removeFromFavorites
+  );
+
   const addToStore = useImageStore((state) => state.addToStore);
+  const removeFromStore = useImageStore((state) => state.removeFromStore);
 
   useEffect(() => {
     async function loadImages() {
@@ -85,15 +93,27 @@ export default function ImageGrid({ searchTerm }: ImageGridProps) {
       )}
 
       <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((image) => (
-          <ImageCard
-            key={image.id}
-            image={image}
-            onImageClick={setSelectedImage}
-            onAddToFavorites={addToFavorites}
-            onAddToStore={addToStore}
-          />
-        ))}
+        {images.map((image) => {
+          const isFavorite = favorites.some(
+            (favorite) => favorite.id === image.id
+          );
+
+          const isInCart = store.some((cartImage) => cartImage.id === image.id);
+
+          return (
+            <ImageCard
+              key={image.id}
+              image={image}
+              isFavorite={isFavorite}
+              isInCart={isInCart}
+              onImageClick={setSelectedImage}
+              onAddToFavorites={addToFavorites}
+              onRemoveFromFavorites={removeFromFavorites}
+              onAddToStore={addToStore}
+              onRemoveFromStore={removeFromStore}
+            />
+          );
+        })}
       </div>
 
       {selectedImage && (

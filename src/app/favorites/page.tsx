@@ -13,7 +13,8 @@ export default function FavoritesPage() {
   const favorites = useImageStore((state) => state.favorites);
   const removeFromFavorites = useImageStore((state) => state.removeFromFavorites);
   const addToStore = useImageStore((state) => state.addToStore);
-
+  const store = useImageStore((state) => state.store);
+  const removeFromStore = useImageStore((state) => state.removeFromStore);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   return (
@@ -77,8 +78,10 @@ export default function FavoritesPage() {
             <FavoriteImageCard
               key={image.id}
               image={image}
+              isInCart={store.some((cartImage) => cartImage.id === image.id)}
               onRemove={removeFromFavorites}
               onAddToStore={addToStore}
+              onRemoveFromStore={removeFromStore}
               onImageClick={setSelectedImage}
             />
           ))}

@@ -1,19 +1,44 @@
 import type { Image } from "@/src/types/image";
-import toast from "react-hot-toast";
 
 type ImageCardProps = {
   image: Image;
+  isFavorite: boolean;
+  isInCart: boolean;
   onImageClick: (image: Image) => void;
   onAddToFavorites: (image: Image) => void;
+  onRemoveFromFavorites: (id: string) => void;
   onAddToStore: (image: Image) => void;
+  onRemoveFromStore: (id: string) => void;
 };
 
 export function ImageCard({
   image,
+  isFavorite,
+  isInCart,
   onImageClick,
   onAddToFavorites,
+  onRemoveFromFavorites,
   onAddToStore,
+  onRemoveFromStore,
 }: ImageCardProps) {
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      onRemoveFromFavorites(image.id);
+      return;
+    }
+
+    onAddToFavorites(image);
+  };
+
+  const handleCartClick = () => {
+    if (isInCart) {
+      onRemoveFromStore(image.id);
+      return;
+    }
+
+    onAddToStore(image);
+  };
+
   return (
     <article className="group overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] shadow-2xl shadow-black/20 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-fuchsia-300/40 hover:bg-white/[0.07]">
       <button
@@ -41,29 +66,42 @@ export function ImageCard({
 
         <div className="grid grid-cols-2 gap-3">
           <button
-            className="group/btn flex items-center justify-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm font-bold text-slate-200 transition hover:border-fuchsia-300/50 hover:bg-fuchsia-400/10 hover:text-white"
-            onClick={() => {
-              onAddToFavorites(image);
-              toast.success("Added to Favorites");
-            }}
+            className={`group/btn flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-bold transition ${
+              isFavorite
+                ? "border-fuchsia-300/40 bg-fuchsia-400/15 text-fuchsia-100"
+                : "border-white/10 text-slate-200 hover:border-fuchsia-300/50 hover:bg-fuchsia-400/10 hover:text-white"
+            }`}
+            onClick={handleFavoriteClick}
           >
-            <span className="text-lg text-fuchsia-300 transition group-hover/btn:scale-125">
-              ♡
+            <span
+              className={`text-lg transition group-hover/btn:scale-125 ${
+                isFavorite ? "scale-125 text-fuchsia-300" : "text-fuchsia-300"
+              }`}
+            >
+              {isFavorite ? "♥" : "♡"}
             </span>
-            Favorite
+            {isFavorite ? "Saved" : "Favorite"}
           </button>
 
           <button
-            className="group/btn flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-cyan-400 px-4 py-3 text-sm font-black text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.03]"
-            onClick={() => {
-              onAddToStore(image);
-              toast.success("Added to Cart");
-            }}
+            className={`group/btn relative flex items-center justify-center gap-2 overflow-hidden rounded-2xl px-4 py-3 text-sm font-black text-white shadow-xl transition duration-300 hover:-translate-y-0.5 active:scale-95 ${
+              isInCart
+                ? "bg-emerald-500 shadow-emerald-500/30 ring-2 ring-emerald-300/30 hover:bg-emerald-400"
+                : "bg-gradient-to-r from-orange-400 via-fuchsia-500 to-cyan-400 shadow-fuchsia-500/30 ring-2 ring-fuchsia-300/20 hover:scale-[1.04] hover:shadow-cyan-400/40"
+            }`}
+            onClick={handleCartClick}
           >
-            <span className="text-lg transition group-hover/btn:scale-125">
-              🛒
+            <span className="absolute inset-0 bg-white/0 transition group-hover/btn:bg-white/15" />
+
+            {!isInCart && (
+              <span className="absolute -left-10 top-0 h-full w-10 skew-x-[-20deg] bg-white/30 transition duration-700 group-hover/btn:left-[120%]" />
+            )}
+
+            <span className="relative text-lg transition group-hover/btn:scale-125">
+              {isInCart ? "✓" : "🛒"}
             </span>
-            Add to Cart
+
+            <span className="relative">{isInCart ? "Added" : "Add to Cart"}</span>
           </button>
         </div>
       </div>
