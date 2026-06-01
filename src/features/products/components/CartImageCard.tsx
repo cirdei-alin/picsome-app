@@ -1,5 +1,6 @@
 import type { Image } from "@/src/types/image";
 import toast from "react-hot-toast";
+import { ProductPrice } from "./ProductPrice";
 
 type CartItem = Image & {
   quantity: number;
@@ -40,9 +41,7 @@ export function CartImageCard({
             {image.description}
           </p>
 
-          <p className="shrink-0 rounded-full bg-white px-3 py-1 text-sm font-black text-slate-950 shadow-lg">
-            ${image.price.toFixed(2)}
-          </p>
+          <ProductPrice price={image.price} />
         </div>
 
         <div className="mb-4 rounded-3xl border border-white/10 bg-slate-950/60 p-4">
