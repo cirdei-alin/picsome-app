@@ -16,8 +16,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PicSome Studio • Alin",
-  description: "A premium gallery experience built with Next.js, TypeScript, Tailwind CSS and Zustand.",
+  title: "PicSome Studio • Cîrdei Alin",
+  description:
+    "Modern image gallery built with Next.js, TypeScript, Tailwind CSS and Zustand.",
+
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+      },
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
