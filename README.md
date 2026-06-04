@@ -1,3 +1,8 @@
+## Documentation
+
+- [Project Presentation](presentation.md)
+- [Live Demo](https://picsome-studio.vercel.app)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -13,7 +18,6 @@ pnpm dev
 # or
 bun dev
 ```
-[Link to presentation](presentation.md)
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
